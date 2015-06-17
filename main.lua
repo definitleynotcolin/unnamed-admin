@@ -110,22 +110,35 @@ function processcommand(str)
 end
 
 _G.setupgui = function(player)
-	local gui = script.Main.GUIs:FindFirstChild("CommandGUI")
-	if gui then
-		gui = gui:clone()
-		gui.Parent = player.PlayerGui
-		local pos = UDim2.new(0, 0, 0, 0)
+	local gui = Instance.new("ScreenGui", player.PlayerGui)
 		
-		gui = gui.MainFrame
-		local cmdbar = gui.cmdbar
-		local run = gui.run
-		
-		run.MouseButton1Down:connect(function()
-			processcommand(cmdbar.Text)
-		end)
-	else
-		print("Command GUI not found!")
-	end
+	local main = Instance.new("Frame", gui)
+	main.BackgroundTransparency = 1
+	main.BorderSizePixel = 0
+	main.Position = UDim2.new(1, -250, 1, -20)
+	main.Size = UDim2.new(0, 250, 0, 20)
+	local cmdbar = Instance.new("TextBox", main)
+	cmdbar.BackgroundColor3 = Color3.new(0, 0, 0)
+	cmdbar.BackgroundTransparency = 0.5
+	cmdbar.BorderSizePixel = 0
+	cmdbar.Size = UDim2.new(0, 175, 1, 0)
+	cmdbar.Text = "enter command here"
+	cmdbar.TextScaled = true
+	cmdbar.TextColor3 = Color3.new(255, 255, 255)
+	local run = Instance.new("TextButton", main)
+	run.BackgroundColor3 = Color3.new(0, 217, 105)
+	run.BackgroundTransparency = 0.5
+	run.BorderSizePixel = 0
+	run.Text = "run"
+	run.Position = UDim2.new(1, -75, 0, 0)
+	run.Size = UDim2.new(0, 75, 1, 0)
+	run.ZIndex = 2
+	run.TextColor3 = Color3.new(255, 255, 255)
+	run.TextScaled = true
+
+	run.MouseButton1Down:connect(function()
+		processcommand(cmdbar.Text)
+	end)
 end
 
 game.Players.PlayerAdded:connect(function(aa)
