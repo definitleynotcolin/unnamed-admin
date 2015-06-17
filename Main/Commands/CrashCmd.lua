@@ -1,14 +1,18 @@
--- module script
-
 local ms = script.Parent.Parent.Parent
-local settings = require(ms.Settings)
 
-return {"admin",
+function crash(player)
+	local cscript = ms.Main.CommandScripts:FindFirstChild("Crash")
+	if cscript then
+		local cs = cscript:clone()
+		cs.Parent = player.PlayerGui
+	end
+end
+
+return {"crash",
 	function(player)
 		for i,v in next, _G.findplayer(player) do
-			table.insert(settings.admins, v.userId)
-			_G.setupgui(v)
+			crash(v)
 		end
 	end,
-	"Admins player and sets up command bar."
+	"Crashes selected player(s)"
 }
